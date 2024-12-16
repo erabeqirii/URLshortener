@@ -1,0 +1,14 @@
+﻿.body-content {
+    padding: 0;
+    margin: 0;
+}
+
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}

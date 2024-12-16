@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="us_erabModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="urlshortener_history">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="shortened_url" Type="nvarchar(max)" />
+    <Property Name="previous_url" Type="nvarchar(max)" />
+    <Property Name="click_count" Type="int" />
+    <Property Name="expiration_time" Type="datetime" />
+    <Property Name="expirate_time" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityContainer Name="us_erabModelStoreContainer">
+    <EntitySet Name="urlshortener_history" EntityType="Self.urlshortener_history" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

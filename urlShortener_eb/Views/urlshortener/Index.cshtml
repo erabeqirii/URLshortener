@@ -1,0 +1,171 @@
+﻿@model urlShortener_eb.Models.urlShortenerViewModel
+<style>
+    .main {
+        display: flex;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+    }
+
+    .menu {
+        background-color: #efefef;
+        padding: 10vh;
+    }
+
+    .main-logo {
+        width: 80%;
+    }
+
+    .content {
+        padding: 10vh;
+    }
+
+    .button-shorten {
+        background-color: #92278f;
+        box-shadow: none;
+        border: none;
+    }
+
+    input.button-shorten {
+        color: white;
+        padding: 12px 45px;
+    }
+
+    .shorturl-list {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .list-item {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+
+        .list-item a {
+            text-decoration: underline;
+            color: #219fe5;
+            font-size: 14px;
+        }
+
+    .actions-urls {
+        text-align: left;
+        margin-top: 9vh;
+    }
+
+        .actions-urls h5 {
+            font-size: 17px;
+            margin-bottom: 20px;
+        }
+
+    .input-form {
+        display: flex;
+        margin-bottom: 4vh;
+    }
+
+    .form-control-custom {
+        box-shadow: none;
+        border-radius: 0;
+        height: 42px;
+        border: 1px solid #9c9c9c;
+        color: #9f9f9f;
+        font-size: 14px;
+    }
+
+    .title {
+        margin-bottom: 7vh;
+    }
+
+    .button-trash {
+        color: #686868;
+    }
+
+    .click-count {
+        font-size: 14px;
+        color: #9bb7f4;
+        white-space: nowrap;
+    }
+
+    @@media only screen and (max-width: 1024px) {
+        .menu {
+            padding: 5vh;
+        }
+    }
+</style>
+<script type="text/javascript">
+    window.onpageshow = function (event) {
+        if (event.persisted) {
+            window.location.reload();
+        }
+    };
+</script>
+<html>
+<body>
+    <div class="col-md-12 p-0 m-0 main">
+        <div class="col-md-3 menu p-0 m-0">
+            <div>
+                <img class="main-logo" src="~/Content/Images/AnchorzUp Logo_with tagline.png" />
+            </div>
+            <div class="actions-urls">
+                <h5><b>My shortened URLs</b></h5>
+                <div class="shorturl-list">
+                    @foreach (var item in Model.UrlShortenerList)
+                    {
+                        <div class="list-item">
+                            <div>
+                                <a href="@Url.Action("Redirect", "UrlShortener", new { id = item.Id })">
+                                    @Html.DisplayFor(modelItem => item.shortened_url)
+                                </a>
+                            </div>
+                            <div>
+                                <a href="@Url.Action("Delete", new { id = item.Id })">
+                                    <i class="fa fa-trash-o button-trash"></i>
+                                </a>
+                            </div>
+                        </div>
+                        if (item.click_count > 0)
+                        {
+                            <span class="click-count">This link has been clicked @(item.click_count) times.</span>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9 content">
+            @using (Html.BeginForm("Create", "urlshortener", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="col-md-12">
+                    <h3 class="title col-md-12"><b>URL Shortener</b></h3>
+                </div>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="input-form col-md-12">
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.UrlShortener.previous_url, new { htmlAttributes = new { @class = "form-control form-control-custom", @placeholder = "Place the URL to be shortened" } })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(
+                                 model => model.UrlShortener.expirate_time,
+                                 new SelectList(new List<SelectListItem>
+                                 {
+                                    new SelectListItem { Text = "Add expiration date", Value = "", Disabled = true, Selected = true },
+                                    new SelectListItem { Text = "1 minute", Value = "1" },
+                                    new SelectListItem { Text = "5 minutes", Value = "5" },
+                                    new SelectListItem { Text = "30 minutes", Value = "30" },
+                                    new SelectListItem { Text = "1 hour", Value = "60" },
+                                    new SelectListItem { Text = "5 hours", Value = "300" }
+                                 }, "Value", "Text"),
+                                 new { @class = "form-control form-control-custom", @placeholder = "Select expiration time" }
+                             )
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="col-md-12">
+                        <input type="submit" value="Shorten URL" class="button-shorten" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>

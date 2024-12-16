@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="us_erabModelStoreContainer" CdmEntityContainer="us_eraEntities">
+    <EntitySetMapping Name="urlshortener_history">
+      <EntityTypeMapping TypeName="us_erabModel.urlshortener_history">
+        <MappingFragment StoreEntitySet="urlshortener_history">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="shortened_url" ColumnName="shortened_url" />
+          <ScalarProperty Name="previous_url" ColumnName="previous_url" />
+          <ScalarProperty Name="click_count" ColumnName="click_count" />
+          <ScalarProperty Name="expiration_time" ColumnName="expiration_time" />
+          <ScalarProperty Name="expirate_time" ColumnName="expirate_time" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
